@@ -4,6 +4,8 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
+const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -13,10 +15,9 @@ module.exports = (options) => ({
   }, options.output), // Merge with env dependent settings
   module: {
     loaders: [{
-      test: /\.js$/, // Transform all .js files required somewhere with Babel
-      loader: 'babel-loader',
+      test: /\.tsx$/, // Transform all .js files required somewhere with Babel
       exclude: /node_modules/,
-      query: options.babelQuery,
+      use: options.tsLoaders,
     }, {
       // Do not transform vendor's CSS with CSS-modules
       // The point is that they remain in global scope.
@@ -61,6 +62,8 @@ module.exports = (options) => ({
     }],
   },
   plugins: options.plugins.concat([
+    new TsConfigPathsPlugin(),
+    new CheckerPlugin(),
     new webpack.ProvidePlugin({
       // make fetch available
       fetch: 'exports-loader?self.fetch!whatwg-fetch',
@@ -81,6 +84,8 @@ module.exports = (options) => ({
     extensions: [
       '.js',
       '.jsx',
+      '.ts',
+      '.tsx',
       '.react.js',
     ],
     mainFields: [

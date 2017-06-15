@@ -261,6 +261,18 @@ autoprefixer@^6.3.1:
     postcss "^5.2.6"
     postcss-value-parser "^3.2.3"
 
+awesome-typescript-loader@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmjs.com/awesome-typescript-loader/-/awesome-typescript-loader-3.1.2.tgz#3df192b91a6285f795ca65e63aad114fbb44f710"
+  dependencies:
+    colors "^1.1.2"
+    enhanced-resolve "^3.1.0"
+    loader-utils "^1.0.2"
+    lodash "^4.17.4"
+    mkdirp "^0.5.1"
+    object-assign "^4.1.1"
+    source-map-support "^0.4.11"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"

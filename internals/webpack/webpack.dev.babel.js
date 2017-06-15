@@ -11,6 +11,7 @@ const logger = require('../../server/logger');
 const cheerio = require('cheerio');
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
 const dllPlugin = pkg.dllPlugin;
+const OfflinePlugin = require('offline-plugin');
 
 const plugins = [
   new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
@@ -23,6 +24,7 @@ const plugins = [
     exclude: /a\.js|node_modules/, // exclude node_modules
     failOnError: false, // show a warning when there is a circular dependency
   }),
+  new OfflinePlugin(),
 ];
 
 module.exports = require('./webpack.base.babel')({
@@ -30,7 +32,7 @@ module.exports = require('./webpack.base.babel')({
   entry: [
     'eventsource-polyfill', // Necessary for hot reloading with IE
     'webpack-hot-middleware/client?reload=true',
-    path.join(process.cwd(), 'app/app.js'), // Start with js/app.js
+    path.join(process.cwd(), 'app/app.tsx'), // Start with js/app.js
   ],
 
   // Don't use hashes in dev mode for better performance
@@ -41,7 +43,10 @@ module.exports = require('./webpack.base.babel')({
 
   // Add development plugins
   plugins: dependencyHandlers().concat(plugins), // eslint-disable-line no-use-before-define
-
+  tsLoaders: [
+    'react-hot-loader',
+    'awesome-typescript-loader',
+  ],
   // Tell babel that we want to hot-reload
   babelQuery: {
     // require.resolve solves the issue of relative presets when dealing with
